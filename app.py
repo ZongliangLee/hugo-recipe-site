@@ -24,9 +24,12 @@ def get_db():
     return conn
 
 # 推送檔案到遠端儲存庫
+@app.route('/push-to-remote', methods=['POST'])
 def push_to_remote(saved_files):
     try:
         # 初始化 Git 倉庫
+        data = request.get_json()
+        saved_files = data.get('files', [])
         repo_path = os.path.dirname(os.path.abspath(__file__))
         repo = Repo(repo_path)
         git = repo.git
@@ -52,7 +55,7 @@ def push_to_remote(saved_files):
         return False, f"Git error: {str(e)}"
     except Exception as e:
         return False, f"Error during Git operation: {str(e)}"
-    
+
 @app.route('/generate-recipe', methods=['POST'])
 def generate_recipe():
     try:
