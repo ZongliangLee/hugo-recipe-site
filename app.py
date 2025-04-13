@@ -72,20 +72,10 @@ def generate_recipe():
         for entry in recipe:
             filename = recipe_to_md(entry)
             saved_files.append(filename)
-        
-        # 將檔案推送到遠端儲存庫
-        success, git_message = push_to_remote(saved_files)
-        if not success:
-            return jsonify({
-                "error": "Failed to push to remote repository",
-                "details": git_message,
-                "files": saved_files
-            }), 500
-
+    
         # 返回所有檔案名稱和推送結果
         return jsonify({
             "message": "Recipes successfully converted to Markdown and pushed to remote",
-            "git_message": git_message,
             "files": saved_files
         }), 200
     
