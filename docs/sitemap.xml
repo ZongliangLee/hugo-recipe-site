@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>http://localhost:1313/hugo-recipe-site/</loc>
+    <lastmod>2025-04-13T00:00:00+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/hugo-recipe-site/recipes/2025-04-13-144211_%E6%B6%BC%E6%8B%8C%E9%BA%BB%E8%8A%8E%E8%8C%84/</loc>
+    <lastmod>2025-04-13T00:00:00+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/hugo-recipe-site/recipes/2025-04-13-144211_%E7%B5%B2%E7%93%9C%E8%B1%86%E8%85%90%E6%B9%AF/</loc>
+    <lastmod>2025-04-13T00:00:00+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/hugo-recipe-site/recipes/2025-04-13-100409_%E8%92%9C%E8%93%89%E8%8A%B1%E6%A4%B0%E8%8F%9C/</loc>
+    <lastmod>2025-04-13T00:00:00+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/hugo-recipe-site/recipes/2025-04-13-144212_%E9%9B%9E%E8%83%B8%E8%82%89%E7%82%92%E9%9D%92%E6%B1%9F%E7%99%BD%E8%8F%9C/</loc>
+    <lastmod>2025-04-13T00:00:00+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/hugo-recipe-site/recipes/2025-04-13-144212_%E9%B3%B3%E6%A2%A8%E6%9C%A8%E7%93%9C%E7%82%92/</loc>
+    <lastmod>2025-04-13T00:00:00+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/hugo-recipe-site/recipes/2025-04-13-100409_%E9%BA%BB%E5%A9%86%E8%8C%84%E5%AD%90/</loc>
+    <lastmod>2025-04-13T00:00:00+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/hugo-recipe-site/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/hugo-recipe-site/tags/</loc>
+  </url><url>
+    <loc>http://localhost:1313/hugo-recipe-site/recipes/</loc>
+  </url>
+</urlset>

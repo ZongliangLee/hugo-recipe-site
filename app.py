@@ -7,7 +7,8 @@ import json
 import re
 from recipe_md import recipe_to_md  # 引入新的 module
 from json_repair import repair_json
-
+from git import Repo, GitCommandError
+import os
 
 
 app = Flask(__name__)
@@ -22,6 +23,36 @@ def get_db():
     conn.text_factory = str  # 添加这行以确保正确处理中文
     return conn
 
+# 推送檔案到遠端儲存庫
+def push_to_remote(saved_files):
+    try:
+        # 初始化 Git 倉庫
+        repo_path = os.path.dirname(os.path.abspath(__file__))
+        repo = Repo(repo_path)
+        git = repo.git
+
+        # 確保工作目錄乾淨
+        if repo.is_dirty(untracked_files=True):
+            # 添加所有新生成的檔案
+            for filename in saved_files:
+                file_path = os.path.join("recipes", filename)
+                git.add(file_path)
+            
+            # 提交
+            commit_message = f"Add recipe markdown files: {', '.join(saved_files)}"
+            git.commit(m=commit_message)
+
+            # 推送
+            git.push("origin", "master")
+
+            return True, f"Successfully pushed {saved_files} to origin/master"
+        else:
+            return True, "No changes to commit"
+    except GitCommandError as e:
+        return False, f"Git error: {str(e)}"
+    except Exception as e:
+        return False, f"Error during Git operation: {str(e)}"
+    
 @app.route('/generate-recipe', methods=['POST'])
 def generate_recipe():
     try:
@@ -38,11 +69,23 @@ def generate_recipe():
         for entry in recipe:
             filename = recipe_to_md(entry)
             saved_files.append(filename)
-        # 返回所有檔案名稱
+        
+        # 將檔案推送到遠端儲存庫
+        success, git_message = push_to_remote(saved_files)
+        if not success:
+            return jsonify({
+                "error": "Failed to push to remote repository",
+                "details": git_message,
+                "files": saved_files
+            }), 500
+
+        # 返回所有檔案名稱和推送結果
         return jsonify({
-            "message": "Recipes successfully converted to Markdown",
+            "message": "Recipes successfully converted to Markdown and pushed to remote",
+            "git_message": git_message,
             "files": saved_files
         }), 200
+    
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
