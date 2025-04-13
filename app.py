@@ -25,7 +25,7 @@ def get_db():
 
 # 推送檔案到遠端儲存庫
 @app.route('/push-to-remote', methods=['POST'])
-def push_to_remote(saved_files):
+def push_to_remote():
     try:
         # 初始化 Git 倉庫
         saved_files = request
