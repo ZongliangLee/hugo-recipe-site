@@ -29,7 +29,7 @@ def push_to_remote():
     try:
         # 初始化 Git 倉庫
         saved_files = request.get_json()
-        print(type(saved_files))
+        print(saved_files)
         repo_path = os.path.dirname(os.path.abspath(__file__))
         repo = Repo(repo_path)
         git = repo.git
