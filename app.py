@@ -47,12 +47,19 @@ def push_to_remote():
 
             # 推送
             git.push("origin", "master")
-
-            return True, f"Successfully pushed {saved_files} to origin/master"
+            return jsonify({
+            "message": "Recipes successfully converted to Markdown and pushed to remote",
+            "files": saved_files
+            }), 200
+            
         else:
-            return True, "No changes to commit"
+            return jsonify({
+            "message": "nothing to push"
+            }), 200
     except GitCommandError as e:
-        return False, f"Git error: {str(e)}"
+        return jsonify({
+            "message": f"Git error: {str(e)}"
+            }), 500
     except Exception as e:
         return False, f"Error during Git operation: {str(e)}"
 
