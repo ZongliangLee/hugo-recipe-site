@@ -150,7 +150,7 @@ def fetch_combined_data():
     # 3. 取得獨特的作物名稱
     u_crops = unique_crops()
     # 4. 過濾出新的作物（即不在現有季節性作物中的）
-    new_crops = [crop for crop in u_crops if crop not in exist_seasonals]
+    new_crops = [crop for crop in u_crops if crop not in exist_seasonals and "甘藍" not in crop]
 
     # 組合並返回資料
     result = {
