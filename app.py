@@ -28,8 +28,8 @@ def get_db():
 def push_to_remote(saved_files):
     try:
         # 初始化 Git 倉庫
-        data = request.get_json()
-        saved_files = data.get('files', [])
+        saved_files = request
+        print(type(saved_files))
         repo_path = os.path.dirname(os.path.abspath(__file__))
         repo = Repo(repo_path)
         git = repo.git
