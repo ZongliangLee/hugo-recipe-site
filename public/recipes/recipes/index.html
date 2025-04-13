@@ -1,0 +1,15 @@
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><article>
+  <h1>食譜列表</h1>
+  <p><strong>熱量：</strong> </p>
+  <p><strong>零售價：</strong> </p>
+  <p><strong>拍賣價：</strong> </p>
+
+  <h2>內容</h2>
+  <h2 id="所有食譜">所有食譜</h2>
+<p>{{ range where .Site.Pages &ldquo;Section&rdquo; &ldquo;recipes&rdquo; }}</p>
+<ul>
+<li>[{{ .Title }}]({{ .RelPermalink }})
+{{ end }}</li>
+</ul>
+
+</article>

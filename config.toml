@@ -1,4 +1,6 @@
 baseURL = 'http://example.org/'
 languageCode = 'zh-tw'
-title = 'Recipe Site'
-theme = ''
+title = 'AI 食譜'
+theme = "ananke"
+timeZone = "Asia/Taipei"  # 設定為台北時區
+publishDir = "docs"

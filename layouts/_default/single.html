@@ -1,0 +1,21 @@
+{{ define "main" }}
+  <div class="recipe-detail">
+    <h1>{{ .Title }}</h1>
+    <p><strong>每人卡路里：</strong> {{ .Params.calories }}</p>
+    <p><strong>零售價估算：</strong> {{ .Params.price }}</p>
+
+    <h2>食材</h2>
+    <ul>
+      {{ range .Params.ingredients }}
+        <li>{{ .amount }} {{ .name }}</li>
+      {{ end }}
+    </ul>
+
+    <h2>步驟</h2>
+    <ol>
+      {{ range .Params.steps }}
+        <li>{{ . }}</li>
+      {{ end }}
+    </ol>
+  </div>
+{{ end }}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Recipes on Recipe Site</title>
+    <link>http://localhost:1313/recipes/</link>
+    <description>Recent content in Recipes on Recipe Site</description>
+    <generator>Hugo</generator>
+    <language>zh-tw</language>
+    <lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/recipes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>義大利蒜香麵</title>
+      <link>http://localhost:1313/recipes/pasta/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/recipes/pasta/</guid>
+      <description>&lt;h2 id=&#34;食材&#34;&gt;食材&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;200克 義大利麵&lt;/li&gt;&#xA;&lt;li&gt;2湯匙 橄欖油&lt;/li&gt;&#xA;&lt;li&gt;3瓣 蒜末&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;步驟&#34;&gt;步驟&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;將義大利麵煮熟，瀝乾備用。&lt;/li&gt;&#xA;&lt;li&gt;熱鍋加入橄欖油，加入蒜末爆香。&lt;/li&gt;&#xA;&lt;li&gt;放入煮熟的麵條拌炒均勻，即可享用。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;熱量&#34;&gt;熱量&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;每人約 450 卡&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;成本估算&#34;&gt;成本估算&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;零售價：約 3 美元&lt;/li&gt;&#xA;&lt;li&gt;拍賣價：約 15 美元&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>食譜列表</title>
+      <link>http://localhost:1313/recipes/recipes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/recipes/recipes/</guid>
+      <description>&lt;h2 id=&#34;所有食譜&#34;&gt;所有食譜&lt;/h2&gt;&#xA;&lt;p&gt;{{ range where .Site.Pages &amp;ldquo;Section&amp;rdquo; &amp;ldquo;recipes&amp;rdquo; }}&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;[{{ .Title }}]({{ .RelPermalink }})&#xA;{{ end }}&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>
