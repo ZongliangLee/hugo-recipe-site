@@ -38,8 +38,11 @@ def generate_recipe():
         for entry in recipe:
             filename = recipe_to_md(entry)
             saved_files.append(filename)
-        
-        return jsonify({"message": f"Recipe markdown created: {filename}"}), 200
+        # 返回所有檔案名稱
+        return jsonify({
+            "message": "Recipes successfully converted to Markdown",
+            "files": saved_files
+        }), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
