@@ -38,9 +38,10 @@ def push_to_remote():
         if repo.is_dirty(untracked_files=True):
             # 添加所有新生成的檔案
             for filename in saved_files:
-                file_path = os.path.join("recipes", filename)
+                file_path = os.path.join("content/recipes", filename)
+                print('file_path',file_path)
                 git.add(file_path)
-            
+
             # 提交
             commit_message = f"Add recipe markdown files: {', '.join(saved_files)}"
             git.commit(m=commit_message)
@@ -61,7 +62,9 @@ def push_to_remote():
             "message": f"Git error: {str(e)}"
             }), 500
     except Exception as e:
-        return False, f"Error during Git operation: {str(e)}"
+        return jsonify({
+            "message": f"error: {str(e)}"
+            }), 500
 
 @app.route('/generate-recipe', methods=['POST'])
 def generate_recipe():
