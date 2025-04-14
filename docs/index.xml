@@ -37,6 +37,13 @@
       <description>&lt;p&gt;這是一道簡單的糖醋鳳梨，適合夏天食用。&lt;/p&gt;</description>
     </item>
     <item>
+      <title>絲瓜蛤蜊湯</title>
+      <link>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-140716_%E7%B5%B2%E7%93%9C%E8%9B%A4%E8%9C%8A%E6%B9%AF/</link>
+      <pubDate>Mon, 14 Apr 2025 00:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-140716_%E7%B5%B2%E7%93%9C%E8%9B%A4%E8%9C%8A%E6%B9%AF/</guid>
+      <description>&lt;p&gt;這是一道簡單的絲瓜蛤蜊湯，適合夏天食用。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>絲瓜豆腐湯</title>
       <link>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-004446_%E7%B5%B2%E7%93%9C%E8%B1%86%E8%85%90%E6%B9%AF/</link>
       <pubDate>Mon, 14 Apr 2025 00:00:00 +0800</pubDate>
@@ -44,11 +51,53 @@
       <description>&lt;p&gt;這是一道簡單的絲瓜豆腐湯，適合夏天食用。&lt;/p&gt;</description>
     </item>
     <item>
+      <title>茄子肉末</title>
+      <link>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-141005_%E8%8C%84%E5%AD%90%E8%82%89%E6%9C%AB/</link>
+      <pubDate>Mon, 14 Apr 2025 00:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-141005_%E8%8C%84%E5%AD%90%E8%82%89%E6%9C%AB/</guid>
+      <description>&lt;p&gt;這是一道簡單的茄子肉末，適合夏天食用。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>蒜蓉油麥菜</title>
+      <link>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-140626_%E8%92%9C%E8%93%89%E6%B2%B9%E9%BA%A5%E8%8F%9C/</link>
+      <pubDate>Mon, 14 Apr 2025 00:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-140626_%E8%92%9C%E8%93%89%E6%B2%B9%E9%BA%A5%E8%8F%9C/</guid>
+      <description>&lt;p&gt;這是一道簡單的蒜蓉油麥菜，適合夏天食用。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>辣炒雞丁</title>
       <link>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-004446_%E8%BE%A3%E7%82%92%E9%9B%9E%E4%B8%81/</link>
       <pubDate>Mon, 14 Apr 2025 00:00:00 +0800</pubDate>
       <guid>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-004446_%E8%BE%A3%E7%82%92%E9%9B%9E%E4%B8%81/</guid>
       <description>&lt;p&gt;這是一道簡單的辣炒雞丁，適合夏天食用。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>金沙絲瓜</title>
+      <link>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-140915_%E9%87%91%E6%B2%99%E7%B5%B2%E7%93%9C/</link>
+      <pubDate>Mon, 14 Apr 2025 00:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-140915_%E9%87%91%E6%B2%99%E7%B5%B2%E7%93%9C/</guid>
+      <description>&lt;p&gt;這是一道簡單的金沙絲瓜，適合夏天食用。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>青江菜豆腐湯</title>
+      <link>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-141146_%E9%9D%92%E6%B1%9F%E8%8F%9C%E8%B1%86%E8%85%90%E6%B9%AF/</link>
+      <pubDate>Mon, 14 Apr 2025 00:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-141146_%E9%9D%92%E6%B1%9F%E8%8F%9C%E8%B1%86%E8%85%90%E6%B9%AF/</guid>
+      <description>&lt;p&gt;這是一道簡單的青江菜豆腐湯，適合夏天食用。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>鳳梨咕咾肉</title>
+      <link>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-141056_%E9%B3%B3%E6%A2%A8%E5%92%95%E5%92%BE%E8%82%89/</link>
+      <pubDate>Mon, 14 Apr 2025 00:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-141056_%E9%B3%B3%E6%A2%A8%E5%92%95%E5%92%BE%E8%82%89/</guid>
+      <description>&lt;p&gt;這是一道簡單的鳳梨咕咾肉，適合夏天食用。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>鳳梨蝦球</title>
+      <link>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-140533_%E9%B3%B3%E6%A2%A8%E8%9D%A6%E7%90%83/</link>
+      <pubDate>Mon, 14 Apr 2025 00:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-140533_%E9%B3%B3%E6%A2%A8%E8%9D%A6%E7%90%83/</guid>
+      <description>&lt;p&gt;這是一道簡單的鳳梨蝦球，適合夏天食用。&lt;/p&gt;</description>
     </item>
     <item>
       <title>食譜列表</title>

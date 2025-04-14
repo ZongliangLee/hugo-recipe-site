@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+import uuid
 import opencc
 import json
 import re
@@ -7,6 +8,8 @@ import logging
 import requests
 from pathlib import Path
 import time
+import traceback
+
 
 # 設置日誌記錄
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -29,34 +32,33 @@ def sanitize_filename(filename):
     return re.sub(r'[<>:"/\\|?*]', '_', filename)
 
 def generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name):
-    """
-    使用 ComfyUI 生成圖片並儲存
-    """
+
+    client_id = str(uuid.uuid4())
     try:
-        # 讀取 lora.json 工作流程
-        with open("/Users/s6307/Documents/ComfyUI/user/default/workflows/lora.json", "r", encoding="utf-8") as f:
+        # 讀取 ComfyUI 的 API 專用格式 workflow（Save as API Format）
+        with open("lora_api.json", "r", encoding="utf-8") as f:
             workflow = json.load(f)
 
-        # 找到正向提示的 CLIPTextEncode 節點（ID 6）
-        for node in workflow["nodes"]:
-            if node["id"] == 6 and node["type"] == "CLIPTextEncode":
-                node["widgets_values"][0] = prompt
-                break
+        # 👉 修改正向 prompt（注意是節點 ID 為 "6"）
+        if "6" in workflow:
+            workflow["6"]["inputs"]["text"] = prompt
+        else:
+            raise ValueError("找不到 CLIPTextEncode 正向節點 ID '6'")
 
-        # 構建 ComfyUI API 請求
+        # ⚙️ 組合完整 payload 結構
         payload = {
+            "client_id": client_id,
             "prompt": workflow
         }
+
+        # 🚀 發送 API 請求
         logger.info(f"傳送 ComfyUI 請求：{comfyui_api_url}")
         response = requests.post(comfyui_api_url, json=payload)
         response.raise_for_status()
-
-        # 獲取 prompt_id
-        result = response.json()
-        prompt_id = result["prompt_id"]
+        prompt_id = response.json()["prompt_id"]
         logger.info(f"ComfyUI 任務已提交，prompt_id：{prompt_id}")
 
-        # 輪詢檢查任務狀態
+        # 🔁 等待任務完成
         history_url = comfyui_api_url.replace("/prompt", "/history")
         while True:
             response = requests.get(f"{history_url}/{prompt_id}")
@@ -66,16 +68,19 @@ def generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name):
                 break
             time.sleep(1)
 
-        # 獲取生成的圖片
-        output_node_id = "9"  # SaveImage 節點的 ID
+        # 🖼 取得生成圖像，節點 ID 為 "9"
+        output_node_id = "9"
         output_files = history[prompt_id]["outputs"][output_node_id]["images"]
         if not output_files:
             raise ValueError("未找到生成的圖片")
 
-        # 下載圖片
+        # 💾 下載圖片
         image_filename = sanitize_filename(f"{recipe_name}.jpg")
         image_path = os.path.join(IMAGE_DIR, image_filename)
-        image_url = comfyui_api_url.replace("/prompt", f"/view?filename={output_files[0]['filename']}&subfolder={output_files[0].get('subfolder', '')}&type={output_files[0].get('type', 'output')}")
+        image_url = comfyui_api_url.replace(
+            "/prompt",
+            f"/view?filename={output_files[0]['filename']}&subfolder={output_files[0].get('subfolder', '')}&type={output_files[0].get('type', 'output')}"
+        )
         image_response = requests.get(image_url)
         image_response.raise_for_status()
 
@@ -84,49 +89,49 @@ def generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name):
         logger.info(f"圖片已儲存：{image_path}")
 
         return f"/images/recipes/{image_filename}"
+
     except Exception as e:
         logger.error(f"使用 ComfyUI 生成圖片失敗：{str(e)}")
         raise
 
-def recipe_to_md(recipes):
+def recipe_to_md(recipe):
+    """
+    將單個食譜轉換為 Markdown 檔案
+    """
     comfyui_api_url = "http://localhost:8000/prompt"
     try:
-        if not isinstance(recipes, list) or not recipes:
-            raise ValueError("recipes 必須是一個非空列表")
+        if not isinstance(recipe, dict) or "name" not in recipe or "image_prompt" not in recipe:
+            raise ValueError("recipe 必須是一個字典並包含 'name' 和 'image_prompt' 鍵")
 
         converter = opencc.OpenCC('s2t.json')
-        for recipe in recipes:
-            if "name" not in recipe or "image_prompt" not in recipe:
-                raise ValueError("每個 recipe 必須包含 'name' 和 'image_prompt' 鍵")
+        title = converter.convert(recipe["name"])
+        filename_base = f"{datetime.now().strftime('%Y-%m-%d-%H%M%S')}_{title}"
+        filename = sanitize_filename(filename_base) + ".md"
+        logger.info(f"生成的檔案名稱：{filename}")
 
-            title = converter.convert(recipe["name"])
-            filename_base = f"{datetime.now().strftime('%Y-%m-%d-%H%M%S')}_{title}"
-            filename = sanitize_filename(filename_base) + ".md"
-            logger.info(f"生成的檔案名稱：{filename}")
+        json_str = json.dumps(recipe, ensure_ascii=False)
+        converted_str = converter.convert(json_str)
+        converted_recipe = json.loads(converted_str)
 
-            json_str = json.dumps(recipe, ensure_ascii=False)
-            converted_str = converter.convert(json_str)
-            converted_recipe = json.loads(converted_str)
+        required_keys = ["ingredients", "steps", "calories", "price"]
+        for key in required_keys:
+            if key not in converted_recipe:
+                raise ValueError(f"recipe 缺少必要的鍵：{key}")
 
-            required_keys = ["ingredients", "steps", "calories", "price"]
-            for key in required_keys:
-                if key not in converted_recipe:
-                    raise ValueError(f"recipe 缺少必要的鍵：{key}")
+        # 使用 ComfyUI 生成圖片
+        image_url = generate_image_with_comfyui(converted_recipe["image_prompt"], comfyui_api_url, title)
 
-            # 使用 ComfyUI 生成圖片
-            image_url = generate_image_with_comfyui(converted_recipe["image_prompt"], comfyui_api_url, title)
+        # 構建 Front Matter
+        ingredients_yaml = "\n".join(
+            f"  - name: \"{item['name']}\"\n    amount: \"{item['amount']}\""
+            for item in converted_recipe["ingredients"]
+        )
+        steps_yaml = "\n".join(
+            f"  - \"{step}\""
+            for step in converted_recipe["steps"]
+        )
 
-            # 構建 Front Matter
-            ingredients_yaml = "\n".join(
-                f"  - name: \"{item['name']}\"\n    amount: \"{item['amount']}\""
-                for item in converted_recipe["ingredients"]
-            )
-            steps_yaml = "\n".join(
-                f"  - \"{step}\""
-                for step in converted_recipe["steps"]
-            )
-
-            front_matter = f"""---
+        front_matter = f"""---
 title: "{title}"
 date: {datetime.now().strftime('%Y-%m-%d')}
 draft: false
@@ -140,24 +145,24 @@ steps:
 ---
 """
 
-            markdown = f"{front_matter}\n這是一道簡單的{title}，適合夏天食用。\n"
-            path = os.path.join(RECIPE_DIR, filename)
-            logger.info(f"準備寫入檔案：{path}")
+        markdown = f"{front_matter}\n這是一道簡單的{title}，適合夏天食用。\n"
+        path = os.path.join(RECIPE_DIR, filename)
+        logger.info(f"準備寫入檔案：{path}")
 
-            if not os.access(RECIPE_DIR, os.W_OK):
-                raise PermissionError(f"沒有寫入權限：{RECIPE_DIR}")
+        if not os.access(RECIPE_DIR, os.W_OK):
+            raise PermissionError(f"沒有寫入權限：{RECIPE_DIR}")
 
-            with open(path, "w", encoding="utf-8") as f:
-                f.write(markdown)
-            logger.info(f"成功寫入檔案：{path}")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(markdown)
+        logger.info(f"成功寫入檔案：{path}")
 
         return filename
 
     except PermissionError as e:
-        logger.error(f"寫入檔案失敗（權限問題）：{str(e)}")
+        logger.error(f"寫入檔案失敗（權限問題）：{str(e)}\n{traceback.format_exc()}")
         raise
     except Exception as e:
-        logger.error(f"寫入檔案失敗：{str(e)}")
+        logger.error(f"寫入檔案失敗：{str(e)}\n{traceback.format_exc()}")
         raise
 
 # 測試程式碼
