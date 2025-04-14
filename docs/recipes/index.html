@@ -1,194 +1,132 @@
 <!DOCTYPE html>
-<html lang="zh-tw">
+<html class="js no-touch  progressive-image  no-reduced-motion progressive" lang="en">
   <head><script src="/hugo-recipe-site/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=hugo-recipe-site/livereload" data-no-instant defer></script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    
-    <title>所有食譜 | AI 食譜</title>
-    <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="description" content="">
-    <meta name="generator" content="Hugo 0.145.0">
-    
-    
-    
-      <meta name="robots" content="noindex, nofollow">
-    
-    
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="/hugo-recipe-site/img/favicon.ico">
 
-    
-<link rel="stylesheet" href="/hugo-recipe-site/ananke/css/main.min.css" >
-
-
-
-
-    
-
-
-    
-      
-
-    
-
-    
-    
-      <link href="/hugo-recipe-site/recipes/index.xml" rel="alternate" type="application/rss+xml" title="AI 食譜" />
-      <link href="/hugo-recipe-site/recipes/index.xml" rel="feed" type="application/rss+xml" title="AI 食譜" />
-      
-    
-
-    
-      <link rel="canonical" href="http://localhost:1313/hugo-recipe-site/recipes/">
-    
-
-    <meta property="og:url" content="http://localhost:1313/hugo-recipe-site/recipes/">
+    <meta name="keyword" content=""><meta property="og:url" content="http://localhost:1313/hugo-recipe-site/recipes/">
   <meta property="og:site_name" content="AI 食譜">
-  <meta property="og:title" content="所有食譜">
-  <meta property="og:description" content="歡迎來到食譜頁面，點擊任一道菜觀看完整做法與圖片。">
+  <meta property="og:title" content="食譜列表">
+  <meta property="og:description" content="所有食譜 {{ range where .Site.Pages “Section” “recipes” }}
+[{{ .Title }}]({{ .RelPermalink }}) {{ end }}">
   <meta property="og:locale" content="zh_tw">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
+<title>食譜列表</title>
 
-  <meta itemprop="name" content="所有食譜">
-  <meta itemprop="description" content="歡迎來到食譜頁面，點擊任一道菜觀看完整做法與圖片。">
-  <meta itemprop="datePublished" content="2025-04-14T00:00:00+08:00">
-  <meta itemprop="dateModified" content="2025-04-14T00:00:00+08:00">
-  <meta itemprop="wordCount" content="1">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="所有食譜">
-  <meta name="twitter:description" content="歡迎來到食譜頁面，點擊任一道菜觀看完整做法與圖片。">
+    <link rel="canonical" href="/hugo-recipe-site/recipes/">
 
-	
-  </head><body class="ma0 avenir bg-near-white development">
+    <link rel="stylesheet" href="/hugo-recipe-site/css/global.css">
+
+    <link rel="stylesheet" href="/hugo-recipe-site/css/custom.css">
+
+    <link rel="stylesheet" href="/hugo-recipe-site/css/search.css" />
 
     
+    
 
-  <header>
-    <div class="pb3-m pb6-l bg-black">
-      <nav class="pv3 ph3 ph4-ns" role="navigation">
-  <div class="flex-l center items-center justify-between">
-    <a href="/hugo-recipe-site/" class="f3 fw2 hover-white white-90 dib no-underline">
-      
-        AI 食譜
-      
-    </a>
-    <div class="flex-l items-center">
-      
+    
+    
 
-      
-      <div class="ananke-socials"></div>
-
+</head>
+  </head>
+  <body class=" page-article   ">
+    <header>
+      <nav class="nav">
+  <div class="nav-wrapper">
+    <div class="nav-content-wrapper">
+      <div class="nav-content">
+        <a href="/hugo-recipe-site/ " class="nav-title">AI 食譜</a>
+        <div class="nav-menu">
+          <div class="nav-item-wrapper">
+            <a href="/hugo-recipe-site/posts " class="nav-item-content">Articles</a>
+          </div><div class="nav-item-wrapper">
+            <a href="/hugo-recipe-site/index.xml" class="nav-item-content" target="_blank">RSS</a>
+          </div></div>
+      </div>
     </div>
   </div>
 </nav>
 
-      <div class="tc-l pv3 ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          所有食譜
-        </h1>
-        
+<script>
+  function toggleSearchModal(){
+    const template = `
+    <div class="modal-body">
+      <div id="autocomplete" onclick="event.stopPropagation();"></div>
+    </div>
+    `
+    const modal = document.querySelector("#modal-wrapper")
+    if(!modal){
+      const div = document.createElement("div")
+      document.body.setAttribute("style","overflow: hidden;")
+      div.setAttribute("id", "modal-wrapper")
+      div.setAttribute("onclick", "toggleSearchModal()")
+      div.innerHTML = template
+      const script = document.createElement("script");script.setAttribute("src", "http://localhost:1313/hugo-recipe-site/js/algolia.js")
+      div.appendChild(script)
+      document.body.append(div)
+    } else {
+      document.body.removeAttribute("style")
+      document.body.removeChild(modal)
+    }
+  }
+</script>
+    </header>
+    
+  <div class="recipe-detail">
+    <h1>食譜列表</h1>
+    <p><strong>每人卡路里：</strong> </p>
+    <p><strong>零售價估算：</strong> </p>
+
+    <h2>食材</h2>
+    <ul>
+      
+    </ul>
+
+    <h2>步驟</h2>
+    <ol>
+      
+    </ol>
+  </div>
+
+    
+    <div class="footer-main ">
+  <div class="content-body footer-wraper">
+    <div class="footer-box">
+      <div class="foot-nav">
+        <div class="foot-nav-items">
+          <div class="item">
+            <div class="logo"></div>
+            <div class="email">Email: <a href="mailto:"></a></div>
+          </div>
+
+          <div class="item community">
+            <div class="item-title">Social Media</div>
+            
+          </div>
+
+          <div class="item resources">
+            <div class="item-title">Related</div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="item copyright">
+          &copy; 2025
+          Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> & <a href="https://github.com/floyd-li/hugo-theme-itheme" target="_blank">iTheme</a>
+        </div>
       </div>
     </div>
-  </header>
-
-
-    <main class="pb7" role="main">
-      
-  <style>
-    .recipe-list {
-      padding: 2rem;
-      max-width: 960px;
-      margin: auto;
-    }
-
-    .recipe-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .recipe-card {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease;
-      background: white;
-      text-align: center;
-    }
-
-    .recipe-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-    }
-
-    .recipe-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-
-    .recipe-card h3 {
-      margin: 0;
-      padding: 1rem;
-      font-size: 1.1rem;
-    }
-  </style>
-
-  <div class="recipe-list">
-    <h1>所有食譜</h1>
-    <div class="recipe-grid">
-      
-        <a href="/hugo-recipe-site/recipes/2025-04-14-170008_%E6%B8%85%E8%92%B8%E9%B1%B8%E9%AD%9A/" class="recipe-card">
-          <img src="" alt="清蒸鱸魚">
-          <h3>清蒸鱸魚</h3>
-        </a>
-      
-        <a href="/hugo-recipe-site/recipes/2025-04-14-205522_%E7%95%AA%E8%8C%84%E8%B1%86%E8%85%90%E8%9B%8B%E8%8A%B1%E6%B9%AF/" class="recipe-card">
-          <img src="" alt="番茄豆腐蛋花湯">
-          <h3>番茄豆腐蛋花湯</h3>
-        </a>
-      
-        <a href="/hugo-recipe-site/recipes/2025-04-14-170057_%E7%B5%B2%E7%93%9C%E8%9B%A4%E8%9C%8A%E6%B9%AF/" class="recipe-card">
-          <img src="" alt="絲瓜蛤蜊湯">
-          <h3>絲瓜蛤蜊湯</h3>
-        </a>
-      
-        <a href="/hugo-recipe-site/recipes/2025-04-14-205432_%E8%92%9C%E8%93%89%E5%B0%8F%E7%99%BD%E8%8F%9C/" class="recipe-card">
-          <img src="" alt="蒜蓉小白菜">
-          <h3>蒜蓉小白菜</h3>
-        </a>
-      
-        <a href="/hugo-recipe-site/recipes/2025-04-14-165829_%E8%92%9C%E8%93%89%E7%82%92%E5%B0%8F%E7%99%BD%E8%8F%9C/" class="recipe-card">
-          <img src="" alt="蒜蓉炒小白菜">
-          <h3>蒜蓉炒小白菜</h3>
-        </a>
-      
-        <a href="/hugo-recipe-site/recipes/2025-04-14-205703_%E8%92%9C%E9%A6%99%E9%9B%9E%E8%85%BF/" class="recipe-card">
-          <img src="" alt="蒜香雞腿">
-          <h3>蒜香雞腿</h3>
-        </a>
-      
-        <a href="/hugo-recipe-site/recipes/2025-04-14-205613_%E9%86%AC%E7%87%92%E8%8C%84%E5%AD%90/" class="recipe-card">
-          <img src="" alt="醬燒茄子">
-          <h3>醬燒茄子</h3>
-        </a>
-      
-        <a href="/hugo-recipe-site/recipes/2025-04-14-165918_%E9%AD%9A%E9%A6%99%E8%8C%84%E5%AD%90/" class="recipe-card">
-          <img src="" alt="魚香茄子">
-          <h3>魚香茄子</h3>
-        </a>
-      
-    </div>
   </div>
-
-    </main>
-    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
-  <div class="flex justify-between">
-  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/hugo-recipe-site/" >
-    &copy;  AI 食譜 2025 
-  </a>
-    <div><div class="ananke-socials"></div>
 </div>
-  </div>
-</footer>
 
   </body>
+    
+    
+
+    
+    
 </html>

@@ -1,6 +1,6 @@
 baseURL = "https://ZongliangLee.github.io/hugo-recipe-site/"
 languageCode = 'zh-tw'
 title = 'AI 食譜'
-theme = "ananke"
+theme = "hugo-theme-itheme"
 timeZone = "Asia/Taipei"  # 設定為台北時區
 publishDir = "docs"

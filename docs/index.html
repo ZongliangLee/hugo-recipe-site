@@ -1,226 +1,267 @@
 <!DOCTYPE html>
-<html lang="zh-tw">
-  <head><script src="/hugo-recipe-site/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=hugo-recipe-site/livereload" data-no-instant defer></script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    
-    <title>AI 食譜</title>
-    <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="description" content="">
-    <meta name="generator" content="Hugo 0.145.0">
-    
-    
-    
-      <meta name="robots" content="noindex, nofollow">
-    
-    
+<html class="js no-touch  progressive-image  no-reduced-motion progressive" lang="en">
+  <head>
+	<meta name="generator" content="Hugo 0.145.0"><script src="/hugo-recipe-site/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=hugo-recipe-site/livereload" data-no-instant defer></script>
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="/hugo-recipe-site/img/favicon.ico">
 
-    
-<link rel="stylesheet" href="/hugo-recipe-site/ananke/css/main.min.css" >
-
-
-
-
-    
-
-
-    
-      
-
-    
-
-    
-    
-      <link href="/hugo-recipe-site/index.xml" rel="alternate" type="application/rss+xml" title="AI 食譜" />
-      <link href="/hugo-recipe-site/index.xml" rel="feed" type="application/rss+xml" title="AI 食譜" />
-      
-    
-
-    
-      <link rel="canonical" href="http://localhost:1313/hugo-recipe-site/">
-    
-
-    <meta property="og:url" content="http://localhost:1313/hugo-recipe-site/">
+    <meta name="keyword" content=""><meta property="og:url" content="http://localhost:1313/hugo-recipe-site/">
   <meta property="og:site_name" content="AI 食譜">
   <meta property="og:title" content="AI 食譜">
   <meta property="og:locale" content="zh_tw">
   <meta property="og:type" content="website">
+<title>AI 食譜</title>
 
-  <meta itemprop="name" content="AI 食譜">
-  <meta itemprop="datePublished" content="2025-04-14T00:00:00+08:00">
-  <meta itemprop="dateModified" content="2025-04-14T00:00:00+08:00">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="AI 食譜">
+    <link rel="canonical" href="/hugo-recipe-site">
 
-	
-  </head><body class="ma0 avenir bg-near-white development">
+    <link rel="stylesheet" href="/hugo-recipe-site/css/global.css">
+
+    <link rel="stylesheet" href="/hugo-recipe-site/css/custom.css">
+
+    <link rel="stylesheet" href="/hugo-recipe-site/css/search.css" />
 
     
+    
+    <link rel="stylesheet" href="/hugo-recipe-site/css/autocomplete-theme-classic.css" />
+    
 
-  <header>
-    <div class="pb3-m pb6-l bg-black">
-      <nav class="pv3 ph3 ph4-ns" role="navigation">
-  <div class="flex-l center items-center justify-between">
-    <a href="/hugo-recipe-site/" class="f3 fw2 hover-white white-90 dib no-underline">
-      
-        AI 食譜
-      
-    </a>
-    <div class="flex-l items-center">
-      
+    
+    
+    <link rel="stylesheet" href="/hugo-recipe-site/css1.css" />
+    
+    <link rel="stylesheet" href="/hugo-recipe-site/css2.css" />
+    
 
-      
-      <div class="ananke-socials"></div>
-
+</head>
+  </head>
+  <body class=" page-landing   ">
+    <header>
+      <nav class="nav">
+  <div class="nav-wrapper">
+    <div class="nav-content-wrapper">
+      <div class="nav-content">
+        <a href="/hugo-recipe-site/ " class="nav-title">AI 食譜</a>
+        <div class="nav-menu">
+          <div class="nav-item-wrapper">
+            <a href="/hugo-recipe-site/posts " class="nav-item-content">Articles</a>
+          </div><div class="nav-item-wrapper">
+            <a href="#" onclick="toggleSearchModal()" class="nav-item-content">Search</a>
+          </div></div>
+      </div>
     </div>
   </div>
 </nav>
 
-      <div class="tc-l pv3 ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          AI 食譜
-        </h1>
-        
-      </div>
+<script>
+  function toggleSearchModal(){
+    const template = `
+    <div class="modal-body">
+      <div id="autocomplete" onclick="event.stopPropagation();"></div>
     </div>
-  </header>
-
-
-    <main class="pb7" role="main">
-      
-  <article class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy nested-links mid-gray">
+    `
+    const modal = document.querySelector("#modal-wrapper")
+    if(!modal){
+      const div = document.createElement("div")
+      document.body.setAttribute("style","overflow: hidden;")
+      div.setAttribute("id", "modal-wrapper")
+      div.setAttribute("onclick", "toggleSearchModal()")
+      div.innerHTML = template
+      const script = document.createElement("script");script.setAttribute("src", "http://localhost:1313/hugo-recipe-site/js/algolia.js")
+      div.appendChild(script)
+      document.body.append(div)
+    } else {
+      document.body.removeAttribute("style")
+      document.body.removeChild(modal)
+    }
+  }
+</script>
+    </header>
     
-  </article>
 
-  
-  
-  
-  
-  
-
-  
-    <div class="pa3 pa4-ns w-100 w-70-ns center">
+    <section class="everydayfeed">
+    <div class="section-content">
+      <h2 class="section-head">Articles</h2>
+      <ul role="list" class="section-tiles">
+        
+          
+          
+<li
+  role="listitem"class="tile-item nr-scroll-animation item-hero"
+  style="--nr-animation-transform-y:20%;"
+>
+  <a
+    href=http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-232013_%E7%B5%B2%E7%93%9C%E8%9B%A4%E8%9C%8A%E6%B9%AF/
+    class="tile large-load  medium-load small-load
       
+      tile-hero
+      
+      "
+    aria-label=ZgotmplZ
+  >
+    <div class="tile__media" aria-hidden="true"><img class="cover image" data-src="https://ZongliangLee.github.io/hugo-recipe-site/images/recipes/%e7%b5%b2%e7%93%9c%e8%9b%a4%e8%9c%8a%e6%b9%af.jpg" alt="lt"/>
+    </div>
 
-      <section class="w-100 mw8">
-        
-        
-          <div class="w-100 mb4 relative">
+    <div class="tile__description" aria-hidden="true">
+      <div class="tile__head">
+        <div class="tile__category">
+          
             
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l dark-gray no-underline">
-    <div class="flex-column flex-row-ns flex">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/hugo-recipe-site/recipes/2025-04-14-170008_%E6%B8%85%E8%92%B8%E9%B1%B8%E9%AD%9A/" class="color-inherit dim link">
-            清蒸鱸魚
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          <p>這是一道簡單的清蒸鱸魚，適合夏天食用。</p>
-        </div>
-        <a href="/hugo-recipe-site/recipes/2025-04-14-170008_%E6%B8%85%E8%92%B8%E9%B1%B8%E9%AD%9A/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="w-100 mb4 relative">
+              家常菜
             
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l dark-gray no-underline">
-    <div class="flex-column flex-row-ns flex">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/hugo-recipe-site/recipes/2025-04-14-205522_%E7%95%AA%E8%8C%84%E8%B1%86%E8%85%90%E8%9B%8B%E8%8A%B1%E6%B9%AF/" class="color-inherit dim link">
-            番茄豆腐蛋花湯
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          <p>這是一道簡單的番茄豆腐蛋花湯，適合夏天食用。</p>
+          
         </div>
-        <a href="/hugo-recipe-site/recipes/2025-04-14-205522_%E7%95%AA%E8%8C%84%E8%B1%86%E8%85%90%E8%9B%8B%E8%8A%B1%E6%B9%AF/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        <div class="tile__headline">絲瓜蛤蜊湯</div>
       </div>
+      <div class="tile__timestamp icon-hide icon icon-before icon-clock">April 14, 2025</div>
     </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="w-100 mb4 relative">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l dark-gray no-underline">
-    <div class="flex-column flex-row-ns flex">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/hugo-recipe-site/recipes/2025-04-14-170057_%E7%B5%B2%E7%93%9C%E8%9B%A4%E8%9C%8A%E6%B9%AF/" class="color-inherit dim link">
-            絲瓜蛤蜊湯
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          <p>這是一道簡單的絲瓜蛤蜊湯，適合夏天食用。</p>
-        </div>
-        <a href="/hugo-recipe-site/recipes/2025-04-14-170057_%E7%B5%B2%E7%93%9C%E8%9B%A4%E8%9C%8A%E6%B9%AF/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-      </section>
-
-      
-        <section class="w-100">
-          <h1 class="f3">More</h1>
-          
-          
-            <h2 class="f5 fw4 mb4 dib mr3">
-              <a href="/hugo-recipe-site/recipes/2025-04-14-205432_%E8%92%9C%E8%93%89%E5%B0%8F%E7%99%BD%E8%8F%9C/" class="link black dim">
-                蒜蓉小白菜
-              </a>
-            </h2>
-          
-            <h2 class="f5 fw4 mb4 dib mr3">
-              <a href="/hugo-recipe-site/recipes/2025-04-14-165829_%E8%92%9C%E8%93%89%E7%82%92%E5%B0%8F%E7%99%BD%E8%8F%9C/" class="link black dim">
-                蒜蓉炒小白菜
-              </a>
-            </h2>
-          
-            <h2 class="f5 fw4 mb4 dib mr3">
-              <a href="/hugo-recipe-site/recipes/2025-04-14-205703_%E8%92%9C%E9%A6%99%E9%9B%9E%E8%85%BF/" class="link black dim">
-                蒜香雞腿
-              </a>
-            </h2>
-          
-            <h2 class="f5 fw4 mb4 dib mr3">
-              <a href="/hugo-recipe-site/recipes/2025-04-14-205613_%E9%86%AC%E7%87%92%E8%8C%84%E5%AD%90/" class="link black dim">
-                醬燒茄子
-              </a>
-            </h2>
-          
-        </section>
-      
-
-    </div>
-  
-
-    </main>
-    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
-  <div class="flex justify-between">
-  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/hugo-recipe-site/" >
-    &copy;  AI 食譜 2025 
   </a>
-    <div><div class="ananke-socials"></div>
-</div>
+</li>
+
+        
+
+        
+          
+          
+<li
+  role="listitem"class="tile-item nr-scroll-animation item-2up"
+  style="--nr-animation-transform-y:20%;"
+>
+  <a
+    href=http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-231924_%E8%92%9C%E8%93%89%E6%B2%B9%E9%BA%A5%E8%8F%9C/
+    class="tile large-load  medium-load small-load
+      
+      tile-2up
+      
+      "
+    aria-label=ZgotmplZ
+  >
+    <div class="tile__media" aria-hidden="true"><img class="cover image" data-src="https://ZongliangLee.github.io/hugo-recipe-site/images/recipes/%e8%92%9c%e8%93%89%e6%b2%b9%e9%ba%a5%e8%8f%9c.jpg" alt="lt"/>
+    </div>
+
+    <div class="tile__description" aria-hidden="true">
+      <div class="tile__head">
+        <div class="tile__category">
+          
+            
+              家常菜
+            
+          
+        </div>
+        <div class="tile__headline">蒜蓉油麥菜</div>
+      </div>
+      <div class="tile__timestamp icon-hide icon icon-before icon-clock">April 14, 2025</div>
+    </div>
+  </a>
+</li>
+
+        
+          
+          
+<li
+  role="listitem"class="tile-item nr-scroll-animation item-2up"
+  style="--nr-animation-transform-y:20%;"
+>
+  <a
+    href=http://localhost:1313/hugo-recipe-site/recipes/2025-04-14-231834_%E9%B3%B3%E6%A2%A8%E8%9D%A6%E7%90%83/
+    class="tile large-load  medium-load small-load
+      
+      tile-2up
+      
+      "
+    aria-label=ZgotmplZ
+  >
+    <div class="tile__media" aria-hidden="true"><img class="cover image" data-src="https://ZongliangLee.github.io/hugo-recipe-site/images/recipes/%e9%b3%b3%e6%a2%a8%e8%9d%a6%e7%90%83.jpg" alt="lt"/>
+    </div>
+
+    <div class="tile__description" aria-hidden="true">
+      <div class="tile__head">
+        <div class="tile__category">
+          
+            
+              家常菜
+            
+          
+        </div>
+        <div class="tile__headline">鳳梨蝦球</div>
+      </div>
+      <div class="tile__timestamp icon-hide icon icon-before icon-clock">April 14, 2025</div>
+    </div>
+  </a>
+</li>
+
+        
+
+        
+      </ul>
+    </div>
+  </section><script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var script = document.createElement("script");
+        script.src = "/hugo-recipe-site/js/animation.js";
+        document.head.appendChild(script);
+
+        script.onload = function () {
+          console.log("lazyload.js loaded");
+          
+          initImage();
+        };
+      });
+    </script>
+
+    
+    <div class="footer-main ">
+  <div class="content-body footer-wraper">
+    <div class="footer-box">
+      <div class="foot-nav">
+        <div class="foot-nav-items">
+          <div class="item">
+            <div class="logo"></div>
+            <div class="email">Email: <a href="mailto:floyd.li@outlook.com">floyd.li@outlook.com</a></div>
+          </div>
+
+          <div class="item community">
+            <div class="item-title">Social Media</div>
+            
+              <a href="https://github.com/floyd-li" target="_blank">Github</a>
+            
+              <a href="https://twitter.com/some-one" target="_blank">Twitter</a>
+            
+          </div>
+
+          <div class="item resources">
+            <div class="item-title">Related</div>
+            
+              <a href="https://Apple.com/" target="_blank">Apple</a>
+            
+              <a href="https://Google.com/" target="_blank">Google</a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="item copyright">
+          &copy; 2025
+          Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> & <a href="https://github.com/floyd-li/hugo-theme-itheme" target="_blank">iTheme</a>
+        </div>
+      </div>
+    </div>
   </div>
-</footer>
+</div>
 
   </body>
+    
+    
+    <script src="/hugo-recipe-site/js/algoliasearch.umd.js"></script>
+    <script src="/hugo-recipe-site/js/autocomplete-js.js"></script>
+    
+
+    
+    
+        <script src="/hugo-recipe-site/js1.js"></script>
+    
+        <script src="/hugo-recipe-site/js2.js"></script>
+    
 </html>

@@ -88,15 +88,15 @@ def generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name):
             f.write(image_response.content)
         logger.info(f"圖片已儲存：{image_path}")
 
-        return f"/images/recipes/{image_filename}"
+        return f"https://ZongliangLee.github.io/hugo-recipe-site/images/recipes/{image_filename}"
 
     except Exception as e:
         logger.error(f"使用 ComfyUI 生成圖片失敗：{str(e)}")
         raise
-
+    
 def recipe_to_md(recipe):
     """
-    將單個食譜轉換為 Markdown 檔案
+    將單個食譜轉換為 Markdown 檔案（帶 Hugo-friendly 前後排版與內容）
     """
     comfyui_api_url = "http://localhost:8000/prompt"
     try:
@@ -121,31 +121,56 @@ def recipe_to_md(recipe):
         # 使用 ComfyUI 生成圖片
         image_url = generate_image_with_comfyui(converted_recipe["image_prompt"], comfyui_api_url, title)
 
-        # 構建 Front Matter
-        ingredients_yaml = "\n".join(
-            f"  - name: \"{item['name']}\"\n    amount: \"{item['amount']}\""
-            for item in converted_recipe["ingredients"]
+        # 組成 ingredients 與 steps 的 markdown
+        ingredients_md = "\n".join(
+            f"- {item['name']}：{item['amount']}" for item in converted_recipe["ingredients"]
         )
-        steps_yaml = "\n".join(
-            f"  - \"{step}\""
-            for step in converted_recipe["steps"]
+        steps_md = "\n".join(
+            f"{i+1}. {step}" for i, step in enumerate(converted_recipe["steps"])
         )
 
+        description = f"這是一道經典料理「{title}」，簡單易做，適合夏季與日常餐桌享用。"
+
+        # Front Matter
         front_matter = f"""---
 title: "{title}"
 date: {datetime.now().strftime('%Y-%m-%d')}
 draft: false
-calories: "{converted_recipe['calories']}"
-price: "{converted_recipe['price']}"
-img: "{image_url}"
-ingredients:
-{ingredients_yaml}
-steps:
-{steps_yaml}
+cover: "{image_url}"
+description: "{description}"
+tags: ["家常菜"]
+theme: "light"
+---"""
+
+        # Markdown 內容組合
+        markdown = f"""{front_matter}
+
+## 🥄 每人卡路里  
+{converted_recipe['calories']}
+
+## 💰 預估成本  
+{converted_recipe['price']}
+
 ---
+
+## 🧾 食材準備（約 2~3 人份）
+
+{ingredients_md}
+
+---
+
+## 👩‍🍳 作法步驟
+
+{steps_md}
+
+---
+
+## 📝 小提醒
+
+- 可依個人口味調整醬料濃淡。
+- 可搭配白飯、炒青菜組合成營養套餐。
 """
 
-        markdown = f"{front_matter}\n這是一道簡單的{title}，適合夏天食用。\n"
         path = os.path.join(RECIPE_DIR, filename)
         logger.info(f"準備寫入檔案：{path}")
 
