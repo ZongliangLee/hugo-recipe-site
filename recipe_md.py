@@ -88,7 +88,8 @@ def generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name):
         logger.error(f"使用 ComfyUI 生成圖片失敗：{str(e)}")
         raise
 
-def recipe_to_md(recipes, comfyui_api_url):
+def recipe_to_md(recipes):
+    comfyui_api_url = "http://localhost:8000/prompt"
     try:
         if not isinstance(recipes, list) or not recipes:
             raise ValueError("recipes 必須是一個非空列表")

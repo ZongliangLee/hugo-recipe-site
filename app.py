@@ -341,6 +341,7 @@ def process_llm_response(llm_response):
 def handle_llm():
     data = request.get_json()
     llm_response = data.get("llmResponse")
+    print('llm_response',llm_response)
 
     if not llm_response:
         return jsonify({"error": "缺少 llmResponse"}), 400
