@@ -27,12 +27,12 @@ def recipe_to_md(recipe):
         if not isinstance(recipe, dict) or "name" not in recipe:
             raise ValueError("recipe 必須是一個字典並包含 'name' 鍵")
 
-        title = recipe["name"]
+        converter = opencc.OpenCC('s2t.json')
+        title = converter.convert(recipe["name"])
         filename_base = f"{datetime.now().strftime('%Y-%m-%d-%H%M%S')}_{title}"
         filename = sanitize_filename(filename_base) + ".md"
         logger.info(f"生成的檔案名稱：{filename}")
 
-        converter = opencc.OpenCC('s2t.json')
         json_str = json.dumps(recipe, ensure_ascii=False)
         converted_str = converter.convert(json_str)
         converted_recipe = json.loads(converted_str)
