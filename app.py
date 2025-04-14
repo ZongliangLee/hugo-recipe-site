@@ -215,8 +215,8 @@ def get_seasonal_ingredients():
 
     return seasonal_today
 
-@app.route('/seasonal_top10', methods=['GET'])
-def get_seasonal_top10():
+@app.route('/seasonal_top20', methods=['GET'])
+def get_seasonal_top20():
     try:
         # 獲取今天當季食材
         seasonal_ingredients = get_seasonal_ingredients()
@@ -264,7 +264,7 @@ def get_seasonal_top10():
                 ORDER BY trans_quantity
                 LIMIT 1
                 OFFSET (
-                    SELECT CAST((COUNT(*) * 0.9) AS INTEGER)
+                    SELECT CAST((COUNT(*) * 0.8) AS INTEGER)
                     FROM product_transactions
                 )
             )
