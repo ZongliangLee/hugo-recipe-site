@@ -143,7 +143,7 @@ def unique_crops():
     cursor.execute("SELECT DISTINCT crop_name FROM product_transactions")
     results = cursor.fetchall()
     ## bob
-    return [row[0] for row in results[0:200]]
+    return [row[0] for row in results]
 
 @app.route('/fetch_combined_data')
 def fetch_combined_data():
