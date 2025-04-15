@@ -24,47 +24,65 @@ def get_db():
     return conn
 
 # 推送檔案到遠端儲存庫
+from flask import request, jsonify
+from git import Repo, GitCommandError
+import os
+
 @app.route('/push-to-remote', methods=['POST'])
 def push_to_remote():
     try:
-        # 初始化 Git 倉庫
-        saved_files = request.get_json()['recipes']
-        print(saved_files)
+        # 接收 JSON 輸入
+        saved_files = request.get_json().get('recipes', [])
+        print("原始 Markdown 檔案:", saved_files)
+
+        # 推導出對應的 .jpg 檔名（去除時間戳，只取 _ 後面的部分）
+        jpg_files = []
+        for filename in saved_files:
+            if filename.endswith(".md") and "_" in filename:
+                suffix = filename.split("_", 1)[1].replace(".md", ".jpg")
+                jpg_files.append(suffix)
+
+        all_files = saved_files + jpg_files
+        print("完整要加入的檔案（含 .jpg）:", all_files)
+
+        # Git 初始化
         repo_path = os.path.dirname(os.path.abspath(__file__))
         repo = Repo(repo_path)
         git = repo.git
 
-        # 確保工作目錄乾淨
+        # 確保有變更
         if repo.is_dirty(untracked_files=True):
-            # 添加所有新生成的檔案
-            for filename in saved_files:
+            for filename in all_files:
                 file_path = os.path.join("content/recipes", filename)
-                print('file_path',file_path)
-                git.add(file_path)
+                print("加入 Git 的檔案路徑:", file_path)
+                if os.path.exists(file_path):
+                    git.add(file_path)
+                else:
+                    print(f"[警告] 檔案不存在，略過：{file_path}")
 
-            # 提交
-            commit_message = f"Add recipe markdown files: {', '.join(saved_files)}"
+            # 提交與推送
+            commit_message = f"Add recipe markdown files and images: {', '.join(saved_files)}"
             git.commit(m=commit_message)
-
-            # 推送
             git.push("origin", "master")
+
             return jsonify({
-            "message": "Recipes successfully converted to Markdown and pushed to remote",
-            "files": saved_files
+                "message": "Recipes and images successfully pushed to remote",
+                "files": all_files
             }), 200
-            
         else:
             return jsonify({
-            "message": "nothing to push"
+                "message": "Nothing to push"
             }), 200
+
     except GitCommandError as e:
         return jsonify({
             "message": f"Git error: {str(e)}"
-            }), 500
+        }), 500
     except Exception as e:
         return jsonify({
-            "message": f"error: {str(e)}"
-            }), 500
+            "message": f"Error: {str(e)}"
+        }), 500
+
 
 @app.route('/generate-recipe', methods=['POST'])
 def generate_recipe():
