@@ -1,10 +1,10 @@
 {
   "3": {
     "inputs": {
-      "seed": 179293710227521,
-      "steps": 40,
+      "seed": 80781780361441,
+      "steps": 60,
       "cfg": 7,
-      "sampler_name": "dpmpp_2m",
+      "sampler_name": "euler_ancestral",
       "scheduler": "karras",
       "denoise": 1,
       "model": [
@@ -40,8 +40,8 @@
   },
   "5": {
     "inputs": {
-      "width": 768,
-      "height": 768,
+      "width": 512,
+      "height": 512,
       "batch_size": 1
     },
     "class_type": "EmptyLatentImage",
@@ -51,7 +51,7 @@
   },
   "6": {
     "inputs": {
-      "text": "an illustration of Stir-fried Eggplant with Minced Pork, featuring tender, slightly browned eggplant chunks coated in a rich brown sauce with visible bits of minced pork and fragrant garlic, served on a white porcelain plate, clean white background, realistic food drawing, watercolor style, finely detailed, soft lighting, minimal shadows, food magazine style.",
+      "text": "A delicious plate of Garlic Bok Choy, Chinese style dish, served on a white ceramic plate, top view, vibrant colors, food illustration, clean white background, no text, no watermark, highly detailed, food illustration in hand-painted style, artstation, pinterest, trending.",
       "clip": [
         "11",
         1
@@ -64,7 +64,7 @@
   },
   "7": {
     "inputs": {
-      "text": "badly drawn, poorly rendered, blurry, cartoonish, people, hands, text, signature, watermark, shadows, raw, burnt, messy, chopstick, spoon, fork, knife",
+      "text": "blurry, low resolution, low quality, text, logo, watermark, shadow, messy background, photo, real photo, overexposed\n",
       "clip": [
         "11",
         1
