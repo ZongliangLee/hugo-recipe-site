@@ -135,32 +135,29 @@ def existing_seasonals():
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM seasonal_ingredients")
     rows = cursor.fetchall()
-    return [row[0] for row in rows]
+    conn.close()
+    return [str(row[0]).strip() for row in rows if row[0]]
+
 
 def unique_crops():
     conn = get_db()
     cursor = conn.cursor()
     cursor.execute("SELECT DISTINCT crop_name FROM product_transactions")
     results = cursor.fetchall()
-    ## bob
-    return [row[0] for row in results]
+    conn.close()
+    return [str(row[0]).strip() for row in results if row[0]]
+
 
 @app.route('/fetch_combined_data')
 def fetch_combined_data():
-    # 1. 抓取現有的季節性作物
     exist_seasonals = existing_seasonals()
-    # 3. 取得獨特的作物名稱
     u_crops = unique_crops()
-    # 4. 過濾出新的作物（即不在現有季節性作物中的）
     new_crops = [crop for crop in u_crops if crop not in exist_seasonals and "甘藍" not in crop]
 
-    # 組合並返回資料
-    result = {
+    return jsonify({
         "new_crops": new_crops,
         "existing_seasonals": exist_seasonals
-    }
-    
-    return jsonify(result)
+    })
 
 # 抓取農產品交易資料並儲存
 def fetch_and_store_data():
