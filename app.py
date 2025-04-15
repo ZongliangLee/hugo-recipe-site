@@ -15,7 +15,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # DB 連線設定
-DATABASE = 'market.db'
+DATABASE = 'new.db'
 
 # 建立資料庫連線
 def get_db():
@@ -194,7 +194,7 @@ def fetch_and_store_data():
 def get_seasonal_ingredients():
     now = datetime.datetime.now()
     current_month = now.month
-    conn = sqlite3.connect('market.db')
+    conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -243,7 +243,7 @@ def get_seasonal_top20():
         two_days_ago_date = f"{roc_year:03d}.{two_days_ago.strftime('%m')}.{two_days_ago.strftime('%d')}"
 
         # 連接到資料庫
-        conn = sqlite3.connect('market.db')
+        conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
 
         # 執行查詢，選取今天和前兩天當季且 trans_quantity 位於後10%的記錄
