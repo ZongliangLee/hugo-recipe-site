@@ -152,8 +152,7 @@ def unique_crops():
 def fetch_combined_data():
     exist_seasonals = existing_seasonals()
     u_crops = unique_crops()
-    new_crops = [crop for crop in u_crops if crop not in exist_seasonals and "甘藍" not in crop]
-
+    new_crops = [crop for crop in u_crops if crop not in exist_seasonals]
     return jsonify({
         "new_crops": new_crops,
         "existing_seasonals": exist_seasonals
