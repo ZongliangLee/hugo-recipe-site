@@ -110,6 +110,7 @@ def insert_seasonal_ingredients():
         """, (ingredient['name'], ingredient['month_start'], ingredient['month_end'], ingredient['type']))
 
     conn.commit()
+    conn.close()
     return jsonify({"status": "success"}), 200
 
 
@@ -127,6 +128,7 @@ def create_seasonal_table():
     );
     """)
     conn.commit()
+    conn.close()
 
 def existing_seasonals():
     conn = get_db()
@@ -187,6 +189,7 @@ def fetch_and_store_data():
         ))
 
     conn.commit()
+    conn.close()
 
 def get_seasonal_ingredients():
     now = datetime.datetime.now()
