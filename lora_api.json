@@ -1,8 +1,8 @@
 {
   "3": {
     "inputs": {
-      "seed": 80781780361441,
-      "steps": 60,
+      "seed": 550467346016698,
+      "steps": 45,
       "cfg": 7,
       "sampler_name": "euler_ancestral",
       "scheduler": "karras",
@@ -51,7 +51,7 @@
   },
   "6": {
     "inputs": {
-      "text": "A delicious plate of Garlic Bok Choy, Chinese style dish, served on a white ceramic plate, top view, vibrant colors, food illustration, clean white background, no text, no watermark, highly detailed, food illustration in hand-painted style, artstation, pinterest, trending.",
+      "text": "A delicious bowl of Bok Choy and Tofu Soup, Chinese style soup, clear broth with minimal garnish, light ingredients, subtle toppings, served in a white ceramic bowl, top view, vibrant colors, food illustration, clean white background, no text, no watermark, highly detailed, food illustration in hand-painted style, artstation, pinterest, trending",
       "clip": [
         "11",
         1
@@ -64,7 +64,7 @@
   },
   "7": {
     "inputs": {
-      "text": "blurry, low resolution, low quality, text, logo, watermark, shadow, messy background, photo, real photo, overexposed\n",
+      "text": "blurry, low resolution, low quality, text, logo, watermark, shadow, messy background, photo, real photo, overexposed, exaggerate, overdecorated\n",
       "clip": [
         "11",
         1
