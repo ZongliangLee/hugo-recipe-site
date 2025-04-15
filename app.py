@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 import sqlite3
 import requests
 import datetime
+from datetime import timedelta
 from flask_cors import CORS
 import json
 import re
@@ -28,6 +29,41 @@ from flask import request, jsonify
 from git import Repo, GitCommandError
 import os
 
+@app.route('/get_historical_recipes', methods=['GET'])
+def get_historical_recipes():
+    try:
+        # 設定 recipes 目錄
+        recipes_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "content", "recipes")
+        
+        # 計算 7 天前的日期（包含今天）
+        cutoff_date = datetime.datetime.now() - timedelta(days=7)
+        
+        # 儲存唯一菜名
+        unique_recipes = set()
+        
+        # 遍歷 recipes 目錄
+        if not os.path.exists(recipes_dir):
+            return jsonify({"recipes": []}), 200
+        
+        for filename in os.listdir(recipes_dir):
+            # 匹配檔案名稱格式: YYYY-MM-DD-HHMMSS_菜名
+            match = re.match(r"(\d{4}-\d{2}-\d{2}-\d{6})_(.+)\.md$", filename)
+            if match:
+                timestamp_str, recipe_name = match.groups()
+                try:
+                    # 解析檔案的日期
+                    file_date = datetime.datetime.strptime(timestamp_str, "%Y-%m-%d-%H%M%S")
+                    # 檢查是否在過去 7 天內
+                    if file_date >= cutoff_date:
+                        unique_recipes.add(recipe_name)
+                except ValueError:
+                    continue  # 無效日期格式，跳過
+        
+        return jsonify({"recipes": list(unique_recipes)}), 200
+    
+    except Exception as e:
+        return jsonify({"error": f"伺服器錯誤：{str(e)}"}), 500
+    
 @app.route('/push-to-remote', methods=['POST'])
 def push_to_remote():
     try:
