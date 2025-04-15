@@ -88,7 +88,7 @@ def generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name):
             f.write(image_response.content)
         logger.info(f"圖片已儲存：{image_path}")
 
-        return f"https://ZongliangLee.github.io/hugo-recipe-site/images/recipes/{image_filename}"
+        return f"https://www.youraichefs.com/images/recipes/{image_filename}"
 
     except Exception as e:
         logger.error(f"使用 ComfyUI 生成圖片失敗：{str(e)}")

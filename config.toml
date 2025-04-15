@@ -1,4 +1,4 @@
-baseURL = "https://ZongliangLee.github.io/hugo-recipe-site/"
+baseURL = "https://www.youraichefs.com/"
 languageCode = 'zh-tw'
 title = 'AI 食譜'
 theme = "hugo-theme-itheme"
