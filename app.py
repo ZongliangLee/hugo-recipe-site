@@ -31,47 +31,52 @@ import os
 @app.route('/push-to-remote', methods=['POST'])
 def push_to_remote():
     try:
-        # 接收 JSON 輸入
-        saved_files = request.get_json().get('recipes', [])
-        print("原始 Markdown 檔案:", saved_files)
+        saved_files = request.get_json()['recipes']
+        print(saved_files)
 
-        # 推導出對應的 .jpg 檔名（去除時間戳，只取 _ 後面的部分）
-        jpg_files = []
-        for filename in saved_files:
-            if filename.endswith(".md") and "_" in filename:
-                suffix = filename.split("_", 1)[1].replace(".md", ".jpg")
-                jpg_files.append(suffix)
-
-        all_files = saved_files + jpg_files
-        print("完整要加入的檔案（含 .jpg）:", all_files)
-
-        # Git 初始化
         repo_path = os.path.dirname(os.path.abspath(__file__))
         repo = Repo(repo_path)
         git = repo.git
 
-        # 確保有變更
+        image_folder = os.path.join(repo_path, "static", "images", "recipes")
+        markdown_folder = os.path.join("content", "recipes")
+
+        added_files = []
+
         if repo.is_dirty(untracked_files=True):
-            for filename in all_files:
-                file_path = os.path.join("content/recipes", filename)
-                print("加入 Git 的檔案路徑:", file_path)
-                if os.path.exists(file_path):
-                    git.add(file_path)
-                else:
-                    print(f"[警告] 檔案不存在，略過：{file_path}")
+            for filename in saved_files:
+                # 加入 markdown 檔案
+                md_path = os.path.join(markdown_folder, filename)
+                if os.path.exists(md_path):
+                    git.add(md_path)
+                    added_files.append(md_path)
+                
+                # 推測圖片檔名並加入
+                if "_" in filename:
+                    image_name = filename.split("_", 1)[1].replace(".md", ".jpg")
+                    image_path = os.path.join("static", "images", "recipes", image_name)
+                    abs_image_path = os.path.join(repo_path, image_path)
+                    if os.path.exists(abs_image_path):
+                        git.add(image_path)
+                        added_files.append(image_path)
 
-            # 提交與推送
-            commit_message = f"Add recipe markdown files and images: {', '.join(saved_files)}"
-            git.commit(m=commit_message)
-            git.push("origin", "master")
+            if added_files:
+                commit_message = f"Add recipe markdown and image files: {', '.join(saved_files)}"
+                git.commit(m=commit_message)
+                git.push("origin", "master")
+                return jsonify({
+                    "message": "Recipes successfully converted to Markdown and pushed to remote",
+                    "files": saved_files,
+                    "images": [f.split("_", 1)[1].replace(".md", ".jpg") for f in saved_files]
+                }), 200
+            else:
+                return jsonify({
+                    "message": "No valid files found to push."
+                }), 400
 
-            return jsonify({
-                "message": "Recipes and images successfully pushed to remote",
-                "files": all_files
-            }), 200
         else:
             return jsonify({
-                "message": "Nothing to push"
+                "message": "nothing to push"
             }), 200
 
     except GitCommandError as e:
@@ -80,8 +85,9 @@ def push_to_remote():
         }), 500
     except Exception as e:
         return jsonify({
-            "message": f"Error: {str(e)}"
+            "message": f"error: {str(e)}"
         }), 500
+
 
 
 @app.route('/generate-recipe', methods=['POST'])
