@@ -4,3 +4,7 @@ title = 'AI 食譜'
 theme = "hugo-theme-itheme"
 timeZone = "Asia/Taipei"  # 設定為台北時區
 publishDir = "docs"
+[params]
+    [[params.socialMedia]] # 页脚显示的自定义的媒体链接，可添加多个
+    name = 'Instagram'
+    url = 'http://instagram.com/youraichefs'

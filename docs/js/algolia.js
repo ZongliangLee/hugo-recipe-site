@@ -1,7 +1,7 @@
 (() => {
   // ns-hugo-params:<stdin>
   var baseURL = "http://localhost:1313/";
-  var params = { algolia: { appid: "YOUR_KEY", appkey: "YOUR_APP_KEY", enabled: true, searchindex: "YOUR_INDEX" }, blogroll: [{ name: "Apple", url: "https://Apple.com/" }, { name: "Google", url: "https://Google.com/" }], css: [{ url: "css1.css" }, { url: "css2.css" }], defaultcover: "https://example.com/cover.jpg", email: "floyd.li@outlook.com", js: [{ url: "js1.js" }, { url: "js2.js" }], socialmedia: [{ name: "Github", url: "https://github.com/floyd-li" }, { name: "Twitter", url: "https://twitter.com/some-one" }] };
+  var params = { algolia: { appid: "YOUR_KEY", appkey: "YOUR_APP_KEY", enabled: true, searchindex: "YOUR_INDEX" }, blogroll: [{ name: "Apple", url: "https://Apple.com/" }, { name: "Google", url: "https://Google.com/" }], css: [{ url: "css1.css" }, { url: "css2.css" }], defaultcover: "https://example.com/cover.jpg", email: "floyd.li@outlook.com", js: [{ url: "js1.js" }, { url: "js2.js" }], socialmedia: [{ name: "Instagram", url: "http://instagram.com/youraichefs" }] };
 
   // <stdin>
   var { appid, appkey, searchindex: indexName, enabled } = params.algolia;

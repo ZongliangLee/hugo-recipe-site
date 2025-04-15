@@ -17,6 +17,8 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 # DB 連線設定
 DATABASE = 'new.db'
+# 不重複菜單天數
+UNIQUE_RECIPES_DAYS = 7
 
 # 建立資料庫連線
 def get_db():
@@ -36,7 +38,7 @@ def get_historical_recipes():
         recipes_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "content", "recipes")
         
         # 計算 7 天前的日期（包含今天）
-        cutoff_date = datetime.datetime.now() - timedelta(days=7)
+        cutoff_date = datetime.datetime.now() - timedelta(days=UNIQUE_RECIPES_DAYS)
         
         # 儲存唯一菜名
         unique_recipes = set()
