@@ -123,7 +123,7 @@ def recipe_to_md(recipe):
 
         # 組成 ingredients 與 steps 的 markdown
         ingredients_md = "\n".join(
-            f"- {item['name']}：{item['amount']}" for item in converted_recipe["ingredients"]
+            f"- {item['name']}：{item['amount']} {item['unit']}" for item in converted_recipe["ingredients"]
         )
         steps_md = "\n".join(
             f"{i+1}. {step}" for i, step in enumerate(converted_recipe["steps"])
