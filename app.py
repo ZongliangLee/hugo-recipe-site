@@ -19,6 +19,8 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 DATABASE = 'new.db'
 # 不重複菜單天數
 UNIQUE_RECIPES_DAYS = 7
+IMAGE_MODEL="flux_api.json"
+
 comfyui_api_url = "http://localhost:8188/prompt"
 
 # 建立資料庫連線
@@ -32,7 +34,6 @@ from flask import request, jsonify
 from git import Repo, GitCommandError
 import os
 
-
 @app.route('/generate_ingredients_image', methods=['POST'])
 def generate_ingredients_image():
     try:
@@ -44,7 +45,7 @@ def generate_ingredients_image():
         titles = data.get("titles")
         # 把titles list轉成string, 並把逗號移除
         recipe_name = ", ".join(titles).replace(",", "")
-        image_url = generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name, workflow_path="flux_api.json")
+        image_url = generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name, workflow_path=IMAGE_MODEL)
         return jsonify({"image_url": image_url}), 200
     except Exception as e:
         return jsonify({"error": f"伺服器錯誤：{str(e)}"}), 500

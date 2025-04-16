@@ -32,7 +32,7 @@ except Exception as e:
 def sanitize_filename(filename):
     return re.sub(r'[<>:"/\\|?*]', '_', filename)
 
-def generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name, workflow_path="lora_api.json"):
+def generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name, workflow_path="flux_api.json"):
 
     client_id = str(uuid.uuid4())
     try:
@@ -119,7 +119,7 @@ def recipe_to_md(recipe):
                 raise ValueError(f"recipe 缺少必要的鍵：{key}")
 
         # 使用 ComfyUI 生成圖片
-        image_url = generate_image_with_comfyui(converted_recipe["image_prompt"], comfyui_api_url, title)
+        image_url = generate_image_with_comfyui(converted_recipe["image_prompt"], comfyui_api_url, title, "flux_512_api.json")
 
         # 組成 ingredients 與 steps 的 markdown
         ingredients_md = "\n".join(

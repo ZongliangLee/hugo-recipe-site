@@ -1,7 +1,7 @@
 {
   "6": {
     "inputs": {
-      "text": "an illustration of a colorful chicken stir-fry with diced chicken, garlic, and chili peppers cooked in a tangy tomato sauce, served on a white porcelain plate, clean white background, realistic food drawing, watercolor style, finely detailed, soft lighting, minimal shadows, food magazine style\n",
+      "text": "Stir-fried Sponge Gourd with Eggs, served on a white porcelain plate, clean white background, realistic food drawing, watercolor style, finely detailed, soft lighting, minimal shadows, food magazine style. Focus on the translucent slices of sponge gourd and the fluffy texture of the eggs, with scattered green scallions as garnish.",
       "clip": [
         "11",
         0
@@ -142,7 +142,7 @@
   },
   "25": {
     "inputs": {
-      "noise_seed": 470177797539185
+      "noise_seed": 54707605911096
     },
     "class_type": "RandomNoise",
     "_meta": {
@@ -164,8 +164,8 @@
   },
   "27": {
     "inputs": {
-      "width": 1024,
-      "height": 1024,
+      "width": 512,
+      "height": 512,
       "batch_size": 1
     },
     "class_type": "EmptySD3LatentImage",
@@ -177,8 +177,8 @@
     "inputs": {
       "max_shift": 1.15,
       "base_shift": 0.5,
-      "width": 1024,
-      "height": 1024,
+      "width": 512,
+      "height": 512,
       "model": [
         "12",
         0
