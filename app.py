@@ -6,7 +6,7 @@ from datetime import timedelta
 from flask_cors import CORS
 import json
 import re
-from recipe_md import recipe_to_md  # 引入新的 module
+from recipe_md import recipe_to_md, generate_image_with_comfyui
 from json_repair import repair_json
 from git import Repo, GitCommandError
 import os
@@ -19,6 +19,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 DATABASE = 'new.db'
 # 不重複菜單天數
 UNIQUE_RECIPES_DAYS = 7
+comfyui_api_url = "http://localhost:8188/prompt"
 
 # 建立資料庫連線
 def get_db():
@@ -30,6 +31,25 @@ def get_db():
 from flask import request, jsonify
 from git import Repo, GitCommandError
 import os
+
+
+@app.route('/generate_ingredients_image', methods=['POST'])
+def generate_ingredients_image():
+    try:
+        # 設定 recipes 目錄
+        recipes_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "content", "recipes")
+        
+        data = request.get_json(force=True)  # 添加 force=True 确保正确解析 JSON
+        prompt = data.get("image_prompt")
+        titles = data.get("titles")
+        # 把titles list轉成string, 並把逗號移除
+        recipe_name = ", ".join(titles).replace(",", "")
+        image_url = generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name, workflow_path="flux_api.json")
+        return jsonify({"image_url": image_url}), 200
+    except Exception as e:
+        return jsonify({"error": f"伺服器錯誤：{str(e)}"}), 500
+
+
 
 @app.route('/get_historical_recipes', methods=['GET'])
 def get_historical_recipes():
@@ -279,76 +299,93 @@ def get_seasonal_ingredients():
 @app.route('/seasonal_top50', methods=['GET'])
 def get_seasonal_top50():
     try:
-        # 獲取今天當季食材
-        seasonal_ingredients = get_seasonal_ingredients()
-        if not seasonal_ingredients:
-            return jsonify({"message": "今天沒有當季食材", "data": []}), 200
+        # 獲取 seasonal 參數，預設為 True
+        seasonal = request.args.get('seasonal', 'true').lower() == 'true'
 
-        # 提取當季食材名稱
-        seasonal_names = [item['name'] for item in seasonal_ingredients]
+        # 獲取當季食材（僅在 seasonal=True 時需要）
+        seasonal_ingredients = []
+        seasonal_names = []
+        if seasonal:
+            seasonal_ingredients = get_seasonal_ingredients()
+            if not seasonal_ingredients:
+                return jsonify({"message": "今天沒有當季食材", "data": []}), 200
+            seasonal_names = [item['name'] for item in seasonal_ingredients]
 
         # 獲取今天的日期
         now = datetime.datetime.now()
-
-        # 計算民國年（西元年 - 1911）
         roc_year = now.year - 1911
-
-        # 格式化為 YYY.MM.DD（民國年.月.日）
         today = f"{roc_year:03d}.{now.strftime('%m')}.{now.strftime('%d')}"
-
-        # 計算前兩天的日期
-        two_days_ago = now - datetime.timedelta(days=2)
+        two_days_ago = now - datetime.timedelta(days=1)
         two_days_ago_date = f"{roc_year:03d}.{two_days_ago.strftime('%m')}.{two_days_ago.strftime('%d')}"
 
         # 連接到資料庫
-        conn = sqlite3.connect(DATABASE)
-        cursor = conn.cursor()
+        with sqlite3.connect(DATABASE) as conn:
+            cursor = conn.cursor()
 
-        # 執行查詢，選取今天和前兩天當季且 trans_quantity 位於後10%的記錄
-        query = """
-            SELECT 
-                trans_date, 
-                crop_code, 
-                crop_name, 
-                tc_type, 
-                market_code, 
-                market_name, 
-                upper_price, 
-                middle_price, 
-                lower_price, 
-                avg_price, 
-                trans_quantity
-            FROM product_transactions
-            WHERE trans_quantity > (
-                SELECT trans_quantity
-                FROM product_transactions
-                ORDER BY trans_quantity
-                LIMIT 1
-                OFFSET (
-                    SELECT CAST((COUNT(*) * 0.5) AS INTEGER)
+            # 基礎 SQL 查詢，使用 ROW_NUMBER() 過濾重複 crop_name
+            query = """
+                WITH RankedCrops AS (
+                    SELECT 
+                        trans_date, 
+                        crop_code, 
+                        crop_name, 
+                        tc_type, 
+                        market_code, 
+                        market_name, 
+                        upper_price, 
+                        middle_price, 
+                        lower_price, 
+                        avg_price, 
+                        trans_quantity,
+                        ROW_NUMBER() OVER (PARTITION BY crop_name ORDER BY trans_quantity DESC) as rn
                     FROM product_transactions
+                    WHERE trans_quantity > (
+                        SELECT trans_quantity
+                        FROM product_transactions
+                        ORDER BY trans_quantity
+                        LIMIT 1
+                        OFFSET (
+                            SELECT CAST((COUNT(*) * 0.5) AS INTEGER)
+                            FROM product_transactions
+                        )
+                    )
+                    AND trans_date IN (?, ?)
+                    {}
                 )
-            )
-            AND crop_name IN ({})
-            AND trans_date IN (?, ?)  -- 查詢今天和前兩天的數據
-            ORDER BY trans_quantity DESC
-        """
+                SELECT 
+                    trans_date, 
+                    crop_code, 
+                    crop_name, 
+                    tc_type, 
+                    market_code, 
+                    market_name, 
+                    upper_price, 
+                    middle_price, 
+                    lower_price, 
+                    avg_price, 
+                    trans_quantity
+                FROM RankedCrops
+                WHERE rn = 1
+                ORDER BY trans_quantity DESC
+            """
 
-        # 動態生成 IN 子句的佔位符
-        placeholders = ','.join(['?' for _ in seasonal_names])
-        query = query.format(placeholders)
+            # 根據 seasonal 動態添加 crop_name 條件
+            if seasonal:
+                placeholders = ','.join(['?' for _ in seasonal_names])
+                crop_name_condition = f"AND crop_name IN ({placeholders})"
+                query = query.format(crop_name_condition)
+                params = [today, two_days_ago_date] + seasonal_names
+            else:
+                query = query.format("")
+                params = [today, two_days_ago_date]
 
-        # 執行查詢，傳入 crop_name 清單和今天、前兩天的日期
-        cursor.execute(query, seasonal_names + [today, two_days_ago_date])
-        print(query)
-        print(seasonal_names)
-        print(today, two_days_ago_date)
-        rows = cursor.fetchall()
-        print(rows)
-        conn.close()
+            # 執行查詢
+            print(query, params)
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
 
         # 格式化結果
-        raw_results = [
+        results = [
             {
                 "trans_date": row[0],
                 "crop_code": row[1],
@@ -365,16 +402,7 @@ def get_seasonal_top50():
             for row in rows
         ]
 
-        # 去除重複的資料（根據所有欄位）
-        seen = set()
-        unique_results = []
-        for item in raw_results:
-            item_str = json.dumps(item, sort_keys=True)  # 轉為有順序的 JSON 字串當 key
-            if item_str not in seen:
-                seen.add(item_str)
-                unique_results.append(item)
-
-        return jsonify(unique_results), 200
+        return jsonify(results), 200
 
     except sqlite3.Error as e:
         return jsonify({"error": f"資料庫錯誤：{str(e)}"}), 500

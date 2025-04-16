@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 # 設定 Markdown 檔案儲存路徑
 RECIPE_DIR = 'content/recipes/'
 IMAGE_DIR = 'static/images/recipes/'
+comfyui_api_url = "http://localhost:8188/prompt"
 
 # 確保目錄存在
 try:
@@ -31,12 +32,12 @@ except Exception as e:
 def sanitize_filename(filename):
     return re.sub(r'[<>:"/\\|?*]', '_', filename)
 
-def generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name):
+def generate_image_with_comfyui(prompt, comfyui_api_url, recipe_name, workflow_path="lora_api.json"):
 
     client_id = str(uuid.uuid4())
     try:
         # 讀取 ComfyUI 的 API 專用格式 workflow（Save as API Format）
-        with open("lora_api.json", "r", encoding="utf-8") as f:
+        with open(workflow_path, "r", encoding="utf-8") as f:
             workflow = json.load(f)
 
         # 👉 修改正向 prompt（注意是節點 ID 為 "6"）
@@ -98,7 +99,6 @@ def recipe_to_md(recipe):
     """
     將單個食譜轉換為 Markdown 檔案（帶 Hugo-friendly 前後排版與內容）
     """
-    comfyui_api_url = "http://localhost:8000/prompt"
     try:
         if not isinstance(recipe, dict) or "name" not in recipe or "image_prompt" not in recipe:
             raise ValueError("recipe 必須是一個字典並包含 'name' 和 'image_prompt' 鍵")
@@ -231,7 +231,6 @@ if __name__ == "__main__":
     ]
 
     try:
-        comfyui_api_url = "http://localhost:8000/prompt"  # 更新端口為 8000
         filename = recipe_to_md(test_recipes, comfyui_api_url)
         print(f"返回的檔案名稱：{filename}")
     except Exception as e:
